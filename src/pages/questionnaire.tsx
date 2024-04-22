@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Header from "@/components/NavBar";
 
 
-interface State {
+interface State { 
     fever: boolean;
     cough: boolean;
     difficultBreathing: boolean;
