@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Typography, List, ListItem, ListItemText, Button, Paper, TextField, MenuItem } from '@material-ui/core';
 import axios from 'axios';
 import Header1 from '@/components/NavBard';
-import { useLocation } from 'react-router-dom';
-
 interface Appointment {
   id: number;
   patientName: string;
@@ -26,21 +24,18 @@ interface Doctor {
 }
 
 const DoctorDashboard: React.FC = () => {
-  const location = useLocation();
-  const { symptoms } = location.state;
-
   const [appointments, setAppointments] = useState<Appointment[]>([
     {
       id: 1,
       patientName: 'Sridhar Reddy',
-      appointmentTime: '2024-04-19 14:00 ',
+      appointmentTime: '2024-04-18 14:00 ',
       reason: 'Checkup',
       status: 'pending'
     },
     {
       id: 2,
       patientName: 'Virat Kohli',
-      appointmentTime: '2024-04-19 10:00 ',
+      appointmentTime: '2024-04-18 10:00 ',
       reason: 'Follow-up',
       status: 'pending'
     }
@@ -157,14 +152,6 @@ const DoctorDashboard: React.FC = () => {
           style={{ marginBottom: '1rem' }}
         />
         <Button variant="contained" color="primary" onClick={() => handleSendMessage(responseMessage)}>Send</Button>
-      </div>
-      <div>
-        <Typography variant="h5">Patient Symptoms:</Typography>
-        <ul>
-          {symptoms.map((symptom: string) => (
-            <li key={symptom}>{symptom}</li>
-          ))}
-        </ul>
       </div>
     </main>
   );
