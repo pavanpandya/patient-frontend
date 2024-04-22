@@ -1,180 +1,152 @@
-import React, { useState } from "react";
-//import { useNavigate } from "react-router-dom";
+import React from "react";
 import Header from "@/components/NavBar";
 
-
-interface State { 
-    fever: boolean;
-    cough: boolean;
-    difficultBreathing: boolean;
-    fatigue: boolean;
-    aches: boolean;
-    headache: boolean;
-    lossOfTaste: boolean;
-    soreThroat: boolean;
-    congestion: boolean;
-    nausea: boolean;
-    diarrhea: boolean;
-  }
-  
-const Questionnaire: React.FC<{
-    formData: State;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  }> = ({ formData, onChange, onSubmit }) => {
-    return (
-      <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
-        <Header />
-        <div
-          style={{
-            backgroundColor: "#f9f9f9",
-            borderRadius: "8px",
-            padding: "20px",
-            marginTop: "20px",
-          }}
-        >
-          <form onSubmit={onSubmit}>
-            <h2>Symptoms</h2>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="fever"
-                  checked={formData.fever}
-                  onChange={onChange}
-                />
-                Fever
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="cough"
-                  checked={formData.cough}
-                  onChange={onChange}
-                />
-                Cough
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="difficultBreathing"
-                  checked={formData.difficultBreathing}
-                  onChange={onChange}
-                />
-                Shortness of breath or difficulty breathing
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="fatigue"
-                  checked={formData.fatigue}
-                  onChange={onChange}
-                />
-                Fatigue
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="aches"
-                  checked={formData.aches}
-                  onChange={onChange}
-                />
-                Muscle or body aches
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="headache"
-                  checked={formData.headache}
-                  onChange={onChange}
-                />
-                Headache
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="lossOfTaste"
-                  checked={formData.lossOfTaste}
-                  onChange={onChange}
-                />
-                New loss of taste or smell
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="soreThroat"
-                  checked={formData.soreThroat}
-                  onChange={onChange}
-                />
-                Sore throat
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="congestion"
-                  checked={formData.congestion}
-                  onChange={onChange}
-                />
-                Congestion or runny nose
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="nausea"
-                  checked={formData.nausea}
-                  onChange={onChange}
-                />
-                Nausea or vomiting
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="diarrhea"
-                  checked={formData.diarrhea}
-                  onChange={onChange}
-                />
-                Diarrhea
-              </label>
-            </div>
-            {/* Add checkboxes for other symptoms */}
-            <button
-              type="submit"
-              style={{
-                backgroundColor: "#007bff",
-                color: "#fff",
-                padding: "10px 20px",
-                borderRadius: "5px",
-                border: "none",
-                marginTop: "20px",
-              }}
-            >
-              Submit
-            </button>
-          </form>
-        </div>
+const Questionnaire = ({ formData = {}, onChange, onSubmit }) => {
+  return (
+    <div className="questionnaire-container">
+      <Header />
+      <div className="questionnaire-form">
+        <form onSubmit={onSubmit}>
+          <h2>Symptoms Checklist</h2>
+          {/* Fever */}
+          <div className="symptom-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="fever"
+                checked={formData.fever || false}
+                onChange={onChange}
+              />
+              Fever
+            </label>
+          </div>
+          {/* Persistent Cough */}
+          <div className="symptom-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="cough"
+                checked={formData.cough || false}
+                onChange={onChange}
+              />
+              Persistent Cough
+            </label>
+          </div>
+          {/* Difficulty Breathing */}
+          <div className="symptom-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="difficultyBreathing"
+                checked={formData.difficultyBreathing || false}
+                onChange={onChange}
+              />
+              Difficulty Breathing
+            </label>
+          </div>
+          {/* Fatigue or Weakness */}
+          <div className="symptom-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="fatigue"
+                checked={formData.fatigue || false}
+                onChange={onChange}
+              />
+              Fatigue or Weakness
+            </label>
+          </div>
+          {/* Muscle or Body Aches */}
+          <div className="symptom-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="aches"
+                checked={formData.aches || false}
+                onChange={onChange}
+              />
+              Muscle or Body Aches
+            </label>
+          </div>
+          {/* Headache */}
+          <div className="symptom-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="headache"
+                checked={formData.headache || false}
+                onChange={onChange}
+              />
+              Headache
+            </label>
+          </div>
+          {/* Loss of Taste or Smell */}
+          <div className="symptom-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="lossOfTaste"
+                checked={formData.lossOfTaste || false}
+                onChange={onChange}
+              />
+              Loss of Taste or Smell
+            </label>
+          </div>
+          {/* Sore Throat */}
+          <div className="symptom-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="soreThroat"
+                checked={formData.soreThroat || false}
+                onChange={onChange}
+              />
+              Sore Throat
+            </label>
+          </div>
+          {/* Congestion or Runny Nose */}
+          <div className="symptom-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="congestion"
+                checked={formData.congestion || false}
+                onChange={onChange}
+              />
+              Congestion or Runny Nose
+            </label>
+          </div>
+          {/* Nausea or Vomiting */}
+          <div className="symptom-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="nausea"
+                checked={formData.nausea || false}
+                onChange={onChange}
+              />
+              Nausea or Vomiting
+            </label>
+          </div>
+          {/* Diarrhea */}
+          <div className="symptom-checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="diarrhea"
+                checked={formData.diarrhea || false}
+                onChange={onChange}
+              />
+              Diarrhea
+            </label>
+          </div>
+          <button type="submit" className="submit-button">
+            Submit
+          </button>
+        </form>
       </div>
-    );
-  };
-  
-  export default Questionnaire;
+    </div>
+  );
+};
 
+export default Questionnaire;
