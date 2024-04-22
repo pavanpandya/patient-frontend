@@ -1,148 +1,230 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/NavBar";
 
-const Questionnaire = ({ formData = {}, onChange, onSubmit }) => {
+interface State {
+  fever: boolean;
+  cough: boolean;
+  difficultBreathing: boolean;
+  fatigue: boolean;
+  aches: boolean;
+  headache: boolean;
+  lossOfTaste: boolean;
+  soreThroat: boolean;
+  congestion: boolean;
+  nausea: boolean;
+  diarrhea: boolean;
+  covid: boolean;
+  submitted: boolean;
+}
+
+const Questionnaire: React.FC<any> = (props) => {
+  const [formData, setFormData] = useState<State>({
+    fever: false,
+    cough: false,
+    difficultBreathing: false,
+    fatigue: false,
+    aches: false,
+    headache: false,
+    lossOfTaste: false,
+    soreThroat: false,
+    congestion: false,
+    nausea: false,
+    diarrhea: false,
+    covid: false,
+    submitted: false,
+  });
+
+  const [message, setMessage] = useState<string>("");
+  const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: checked,
+    }));
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const symptoms = Object.keys(formData).filter(
+      (key) => formData[key as keyof State] === true
+    );
+
+    setFormData((prevData) => ({
+      ...prevData,
+      submitted: true,
+      covid: symptoms.length > 0,
+    }));
+
+    setMessage(
+      symptoms.length > 0
+        ? "Your information has been passed to the doctor."
+        : "You are not showing symptoms of COVID-19. Please continue with the scheduling of your appointment."
+    );
+
+    setSelectedSymptoms(symptoms);
+  };
+
   return (
-    <div className="questionnaire-container">
+    <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
       <Header />
-      <div className="questionnaire-form">
+      <div
+        style={{
+          backgroundColor: "#f9f9f9",
+          borderRadius: "8px",
+          padding: "20px",
+          marginTop: "20px",
+        }}
+      >
         <form onSubmit={onSubmit}>
-          <h2>Symptoms Checklist</h2>
-          {/* Fever */}
-          <div className="symptom-checkbox">
+          <h2>Symptoms</h2>
+          <div>
             <label>
               <input
                 type="checkbox"
                 name="fever"
-                checked={formData.fever || false}
+                checked={formData.fever}
                 onChange={onChange}
               />
               Fever
             </label>
           </div>
-          {/* Persistent Cough */}
-          <div className="symptom-checkbox">
+          <div>
             <label>
               <input
                 type="checkbox"
                 name="cough"
-                checked={formData.cough || false}
+                checked={formData.cough}
                 onChange={onChange}
               />
-              Persistent Cough
+              Cough
             </label>
           </div>
-          {/* Difficulty Breathing */}
-          <div className="symptom-checkbox">
+          <div>
             <label>
               <input
                 type="checkbox"
-                name="difficultyBreathing"
-                checked={formData.difficultyBreathing || false}
+                name="difficultBreathing"
+                checked={formData.difficultBreathing}
                 onChange={onChange}
               />
-              Difficulty Breathing
+              Shortness of breath or difficulty breathing
             </label>
           </div>
-          {/* Fatigue or Weakness */}
-          <div className="symptom-checkbox">
+          <div>
             <label>
               <input
                 type="checkbox"
                 name="fatigue"
-                checked={formData.fatigue || false}
+                checked={formData.fatigue}
                 onChange={onChange}
               />
-              Fatigue or Weakness
+              Fatigue
             </label>
           </div>
-          {/* Muscle or Body Aches */}
-          <div className="symptom-checkbox">
+          <div>
             <label>
               <input
                 type="checkbox"
                 name="aches"
-                checked={formData.aches || false}
+                checked={formData.aches}
                 onChange={onChange}
               />
-              Muscle or Body Aches
+              Muscle or body aches
             </label>
           </div>
-          {/* Headache */}
-          <div className="symptom-checkbox">
+          <div>
             <label>
               <input
                 type="checkbox"
                 name="headache"
-                checked={formData.headache || false}
+                checked={formData.headache}
                 onChange={onChange}
               />
               Headache
             </label>
           </div>
-          {/* Loss of Taste or Smell */}
-          <div className="symptom-checkbox">
+          <div>
             <label>
               <input
                 type="checkbox"
                 name="lossOfTaste"
-                checked={formData.lossOfTaste || false}
+                checked={formData.lossOfTaste}
                 onChange={onChange}
               />
-              Loss of Taste or Smell
+              New loss of taste or smell
             </label>
           </div>
-          {/* Sore Throat */}
-          <div className="symptom-checkbox">
+          <div>
             <label>
               <input
                 type="checkbox"
                 name="soreThroat"
-                checked={formData.soreThroat || false}
+                checked={formData.soreThroat}
                 onChange={onChange}
               />
-              Sore Throat
+              Sore throat
             </label>
           </div>
-          {/* Congestion or Runny Nose */}
-          <div className="symptom-checkbox">
+          <div>
             <label>
               <input
                 type="checkbox"
                 name="congestion"
-                checked={formData.congestion || false}
+                checked={formData.congestion}
                 onChange={onChange}
               />
-              Congestion or Runny Nose
+              Congestion or runny nose
             </label>
           </div>
-          {/* Nausea or Vomiting */}
-          <div className="symptom-checkbox">
+          <div>
             <label>
               <input
                 type="checkbox"
                 name="nausea"
-                checked={formData.nausea || false}
+                checked={formData.nausea}
                 onChange={onChange}
               />
-              Nausea or Vomiting
+              Nausea or vomiting
             </label>
           </div>
-          {/* Diarrhea */}
-          <div className="symptom-checkbox">
+          <div>
             <label>
               <input
                 type="checkbox"
                 name="diarrhea"
-                checked={formData.diarrhea || false}
+                checked={formData.diarrhea}
                 onChange={onChange}
               />
               Diarrhea
             </label>
           </div>
-          <button type="submit" className="submit-button">
+          <button
+            type="submit"
+            style={{
+              backgroundColor: "#007bff",
+              color: "#fff",
+              padding: "10px 20px",
+              borderRadius: "5px",
+              border: "none",
+              marginTop: "20px",
+            }}
+          >
             Submit
           </button>
+          {message && <p>{message}</p>}
+          {selectedSymptoms.length > 0 && (
+            <div>
+              <h3>Selected Symptoms:</h3>
+              <ul>
+                {selectedSymptoms.map((symptom) => (
+                  <li key={symptom}>{symptom}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </form>
       </div>
     </div>
