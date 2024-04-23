@@ -4,8 +4,9 @@ const PatientDetailsPage = () => {
   const patients = getDetails();
 
   return (
+    <main>
+      <Header2/ >
     <div style={styles.container}>
-    <Header2/ >
       <h1 style={styles.pageTitle}>Patient Details</h1>
       {patients.map((patient, index) => (
         <div key={index} style={styles.patientContainer}>
@@ -49,6 +50,7 @@ const PatientDetailsPage = () => {
         </div>
       ))}
     </div>
+    </main>
   );
 };
 
