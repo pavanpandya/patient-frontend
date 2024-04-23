@@ -7,9 +7,9 @@ function Header2() {
         <nav className="flex justify-between bg-gray-800 h-18 align-center text-milk text-slate-100">
             <Logo />
             <div className="flex items-center mr-1">
-                <Link className="font-black pr-14 text-3xl" href="/insurancedb">Insurance Dashboard</Link>
+                <Link className="font-black pr-14 text-3xl" href="/insurancedb">Dashboard</Link>
                 <Link className="font-black pr-14 text-3xl" href="/insurancepd">Patient Details</Link>
-                <Link className="font-black pr-14 text-3xl" href="/insuranceacc">Insurance Provider Account</Link>
+                <Link className="font-black pr-14 text-3xl" href="/insuranceacc">Account</Link>
             </div>
         </nav>
     );
