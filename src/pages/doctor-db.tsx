@@ -28,14 +28,14 @@ const DoctorDashboard: React.FC = () => {
     {
       id: 1,
       patientName: 'Sridhar Reddy',
-      appointmentTime: '2024-04-18 14:00 ',
+      appointmentTime: '2024-04-23 14:00 ',
       reason: 'Checkup',
       status: 'pending'
     },
     {
       id: 2,
       patientName: 'Virat Kohli',
-      appointmentTime: '2024-04-18 10:00 ',
+      appointmentTime: '2024-04-23 10:00 ',
       reason: 'Follow-up',
       status: 'pending'
     }
