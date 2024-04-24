@@ -1,200 +1,186 @@
-import React, { useState, useEffect } from 'react';
-import Header from "../components/NavBar";
-import { Grid, Button, Divider, TextField } from '@material-ui/core';
+import React, { useState } from 'react';
+import Link from 'next/link';
+import Footer from '../components/Footer';
+import Header from '../components/NavBar';
 
-const Account: React.FC = () => {
-  const [loaded, setLoaded] = useState(false);
-  const [basic, setBasic] = useState({
-    fname: '',
-    lname: '',
-    email: '',
-    phonenumber: '',
-    img: ''
-  });
-  const [password, setPassword] = useState({
-    pwordold: '',
-    pword: '',
-    pwordconfirmation: ''
-  });
-  const [medical, setMedical] = useState({
-    address1: '',
-    address2: '',
-    state1: '',
-    city: '',
-    zipcode: '',
-    birthdate: '',
-    sex: '',
-    height: '',
-    weight1: '',
-    bloodtype: '',
-    smoke: '',
-    smokefreq: '',
-    drink: '',
-    drinkfreq: '',
-    caffeine: '',
-    caffeinefreq: ''
+const PatientProfile: React.FC = () => {
+  // Sample patient data (replace with actual data)
+  const [patientData, setPatientData] = useState({
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'john.doe@example.com',
+    address: '123 Main Street, City, Country',
+    dateOfBirth: '1990-01-01',
+    gender: 'Male',
+    bloodGroup: 'A+',
+    mobile: '+1234567890',
   });
 
-  useEffect(() => {
-    // Simulating user data fetching
-    const fetchUserData = async () => {
-      // Simulated user data
-      const userData = {
-        fname: 'Sridhar',
-        lname: 'Eguram',
-        email: 'sridhar.eguram@gmail.com',
-        phonenumber: '812-361-3910',
-        img: '/images/profile.jpg',
-        detail: {
-          address1: '1426 N Kinser Pike 6F Bloomington',
-          city: 'Bloomington',
-          state1: 'Indiana',
-          zipcode: '47404',
-          birthdate: '2002-08-01',
-          sex: 'Male',
-          height: '180 cm',
-          weight1: '75 kg',
-          bloodtype: 'AB-',
-          smoke: 'Yes',
-          smokefreq: 'Occasionally',
-          drink: 'Yes',
-          drinkfreq: 'Socially',
-          caffeine: 'Yes',
-          caffeinefreq: 'Daily'
-        }
-      };
-      setBasic(userData);
-      if (userData.detail) {
-        setMedical({
-          ...userData.detail,
-          address2: userData.detail.address1 || '', // Use address1 as default if address2 is null
-        });
-        
-      }
-      setLoaded(true);
-    };
+  // State to track whether the profile is in edit mode
+  const [editMode, setEditMode] = useState(false);
 
-    fetchUserData();
-  }, []);
-
-  const updateBasic = async () => {
-    // Add your logic for updating basic info
+  // Function to handle changes in profile data
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPatientData(prevData => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const updatePassword = async () => {
-    // Add your logic for updating password
-  };
-
-  const updateMedical = async () => {
-    // Add your logic for updating medical info
-  };
-
-  const updateProfilePic = async (img: string) => {
-    // Add your logic for updating profile picture
-  };
-
-  const logoutUser = async () => {
-    // Add your logic for logging out user
-    window.location.href = '/login';
-
+  // Function to handle saving changes
+  const handleSave = () => {
+    // Perform save action (e.g., make API call to update patient data)
+    console.log('Saving changes:', patientData);
+    // For demo purposes, we'll just toggle edit mode off
+    setEditMode(false);
   };
 
   return (
-    <div>
-      {/* Render your account information form here */}
+    <main>
       <Header />
-      <Grid container spacing={3}>
-        {/* Basic Information */}
-        <Grid item xs={12}>
-          <TextField
-            label="First Name"
-            value={basic.fname}
-            onChange={(e) => setBasic({ ...basic, fname: e.target.value })}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Last Name"
-            value={basic.lname}
-            onChange={(e) => setBasic({ ...basic, lname: e.target.value })}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Email"
-            value={basic.email}
-            onChange={(e) => setBasic({ ...basic, email: e.target.value })}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Phone Number"
-            value={basic.phonenumber}
-            onChange={(e) => setBasic({ ...basic, phonenumber: e.target.value })}
-            fullWidth
-          />
-        </Grid>
-        <Divider />
-        {/* Password Update */}
-        <Grid item xs={12}>
-          <TextField
-            label="Old Password"
-            type="password"
-            value={password.pwordold}
-            onChange={(e) => setPassword({ ...password, pwordold: e.target.value })}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="New Password"
-            type="password"
-            value={password.pword}
-            onChange={(e) => setPassword({ ...password, pword: e.target.value })}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Confirm New Password"
-            type="password"
-            value={password.pwordconfirmation}
-            onChange={(e) => setPassword({ ...password, pwordconfirmation: e.target.value })}
-            fullWidth
-          />
-        </Grid>
-        <Divider />
-        {/* Medical Information */}
-        {/* Include Medical Information Fields Here */}
-        <Divider />
-        {/* Action Buttons */}
-        <Grid item container xs={12} style={{ marginBottom: "2rem" }}>
-        <Grid item container xs={12} sm={10}>
-          { /* Displaying user details */}
-                 <TextField label="Address 1" value={medical.address1} onChange={(e) => setMedical({ ...medical, address1: e.target.value })} />
-                 <TextField label="city" value={medical.city} onChange={(e) => setMedical({ ...medical, city: e.target.value })} />
-                 <TextField label="state" value={medical.state1} onChange={(e) => setMedical({ ...medical, state1: e.target.value })} />
-                 <TextField label="Zipcode" value={medical.zipcode} onChange={(e) => setMedical({ ...medical, zipcode: e.target.value })} />
-                 <TextField label="Birthdate" value={medical.birthdate} onChange={(e) => setMedical({ ...medical, birthdate: e.target.value })} />
-                 <TextField label="Gender" value={medical.sex} onChange={(e) => setMedical({ ...medical, sex: e.target.value })} />
-                 <TextField label="Height" value={medical.height} onChange={(e) => setMedical({ ...medical, height: e.target.value })} />
-                 <TextField label="Weight" value={medical.weight1} onChange={(e) => setMedical({ ...medical, weight1: e.target.value })} />
-                   {/* Repeat this pattern for other fields like city, state1, etc. */}
-          </Grid>
-        </Grid>
+      
+      {/* Patient Profile section */}
+      <section className="py-8" style={{background: "#d5c6e0"}}>
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-4">Patient Profile</h2>
+        </div>
+      </section>
+      <div className="max-w-4xl mx-auto px-4 mt-5">
+        <div className="bg-white rounded-lg shadow-md p-8">
+          <h3 className="text-2xl font-semibold mb-4">Personal Information</h3>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-lg font-semibold">First Name:</p>
+              {editMode ? (
+                <input
+                  type="text"
+                  name="firstName"
+                  value={patientData.firstName}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:border-blue-500"
+                />
+              ) : (
+                <p>{patientData.firstName}</p>
+              )}
+            </div>
+            <div>
+              <p className="text-lg font-semibold">Last Name:</p>
+              {editMode ? (
+                <input
+                  type="text"
+                  name="lastName"
+                  value={patientData.lastName}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:border-blue-500"
+                />
+              ) : (
+                <p>{patientData.lastName}</p>
+              )}
+            </div>
+            <div>
+              <p className="text-lg font-semibold">Email:</p>
+              {editMode ? (
+                <input
+                  type="email"
+                  name="email"
+                  value={patientData.email}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:border-blue-500"
+                />
+              ) : (
+                <p>{patientData.email}</p>
+              )}
+            </div>
+            <div>
+              <p className="text-lg font-semibold">Address:</p>
+              {editMode ? (
+                <input
+                  type="text"
+                  name="address"
+                  value={patientData.address}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:border-blue-500"
+                />
+              ) : (
+                <p>{patientData.address}</p>
+              )}
+            </div>
+            <div>
+              <p className="text-lg font-semibold">Date of Birth:</p>
+              {editMode ? (
+                <input
+                  type="date"
+                  name="dateOfBirth"
+                  value={patientData.dateOfBirth}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:border-blue-500"
+                />
+              ) : (
+                <p>{patientData.dateOfBirth}</p>
+              )}
+            </div>
+            <div>
+              <p className="text-lg font-semibold">Gender:</p>
+              {editMode ? (
+                <input
+                  type="text"
+                  name="gender"
+                  value={patientData.gender}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:border-blue-500"
+                />
+              ) : (
+                <p>{patientData.gender}</p>
+              )}
+            </div>
+            <div>
+              <p className="text-lg font-semibold">Blood Group Type:</p>
+              {editMode ? (
+                <input
+                  type="text"
+                  name="bloodGroup"
+                  value={patientData.bloodGroup}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:border-blue-500"
+                />
+              ) : (
+                <p>{patientData.bloodGroup}</p>
+              )}
+            </div>
+            <div>
+              <p className="text-lg font-semibold">Mobile:</p>
+              {editMode ? (
+                <input
+                  type="tel"
+                  name="mobile"
+                  value={patientData.mobile}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:border-blue-500"
+                />
+              ) : (
+                <p>{patientData.mobile}</p>
+              )}
+            </div>
+          </div>
+          {/* Render Save and Edit buttons based on edit mode */}
+          <div className="mt-6">
+            {editMode ? (
+              <button onClick={handleSave} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-4">
+                Save
+              </button>
+            ) : (
+              <button onClick={() => setEditMode(true)} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-4">
+                Edit
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
 
-        <Grid item xs={12}>
-          <Button variant="contained" color="primary" onClick={updateBasic}>Update Basic Info</Button>
-          <Button variant="contained" color="primary" onClick={updatePassword}>Update Password</Button>
-          <Button variant="contained" color="primary" onClick={updateMedical}>Update Medical Info</Button>
-          <Button variant="contained" color="primary" onClick={logoutUser}>Logout</Button>
-        </Grid>
-      </Grid>
-    </div>
+      <Footer />
+    </main>
   );
-};
+}
 
-export default Account;
+export default PatientProfile;

@@ -22,9 +22,9 @@ const InsuranceProviderSearchPage: React.FC = () => {
       <Header />
       
       {/* Insurance Provider Search section */}
-      <section className="bg-green-200 py-8">
+      <section className="py-8"  style={{background: "#d5c6e0"}}>
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-4">Find Insurance Providers</h2>
+          <h2 className="text-4xl font-bold mb-4" style={{marginLeft: '-62px'}}>Find Insurance Providers</h2>
           <div className="flex flex-col md:flex-row md:space-x-4 justify-center">
             {/* Company Name input */}
             <div className="flex flex-col flex-1">

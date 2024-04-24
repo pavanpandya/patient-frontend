@@ -21,7 +21,7 @@ const DoctorSearchPage: React.FC = () => {
       <Header />
       
       {/* Doctor Search section */}
-      <section className="bg-blue-200 py-8">
+      <section className="py-8"  style={{background: "#d5c6e0"}}>
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-4xl font-bold mb-4">Find a Doctor</h2>
           <div className="flex flex-col md:flex-row md:space-x-4">
