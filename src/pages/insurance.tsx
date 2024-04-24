@@ -1,129 +1,113 @@
 import React, { useState } from 'react';
-import Header from "../components/NavBar";
+import Link from 'next/link';
+import Footer from '../components/Footer';
+import Header from '../components/NavBar';
 
-const Insurance: React.FC = () => {
-  // Mock data for insurance providers
-  const [insuranceProviders] = useState([
-    { id: 1, name: 'James', companyName: 'Humana', policyNumber: '94527843', insuranceType: 'Medical', startDate: '01-04-2024', endDate: '03-05-2025' },
-    { id: 2, name: 'Williams', companyName: 'UnitedHealthcare', policyNumber: '80452849', insuranceType: 'Medical', startDate: '02-05-2024', endDate: '04-08-2025' },
-    { id: 3, name: 'Jordan', companyName: 'Blue Cross Blue Shield', policyNumber: '96754921', insuranceType: 'Finance', startDate: '03-04-2024', endDate: '03-10-2025' },
-    { id: 4, name: 'Kane Richardon', companyName: 'Golden Rule Insurance Company', policyNumber: '85674921', insuranceType: 'Medical', startDate: '06-15-2024', endDate: '10-04-2025' },
-    { id: 5, name: 'Andrew', companyName: 'ManhattanLife Assurance Company', policyNumber: '79804627', insuranceType: 'Medical', startDate: '03-08-2024', endDate: '08-21-2025' },
-  ]);
+const InsuranceProviderSearchPage: React.FC = () => {
+  // State variables to store search inputs
+  const [companyName, setCompanyName] = useState('');
+  const [price, setPrice] = useState('');
+  const [medicalIncluded, setMedicalIncluded] = useState('');
+  const [dentalIncluded, setDentalIncluded] = useState('');
+  const [visionIncluded, setVisionIncluded] = useState('');
 
-  // State for selected insurance provider
-  const [selectedProvider, setSelectedProvider] = useState<any>(null);
-
-  // Handle selection of insurance provider
-  const handleSelectProvider = (provider: any) => {
-    setSelectedProvider(provider);
-  };
-
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Implement submission logic here
-    console.log('Selected insurance provider:', selectedProvider);
+  // Function to handle search
+  const handleSearch = () => {
+    // Perform search based on inputs
+    // You can implement the search logic here
   };
 
   return (
-    <div className="insurance-container">
+    <main>
       <Header />
-      <h2>Insurance Providers</h2>
-      <form onSubmit={handleSubmit}>
-        <ul className="provider-list">
-          {insuranceProviders.map(provider => (
-            <li key={provider.id} className="provider-item">
-              <div className="provider-details">
-                <h3>{provider.name}</h3>
-                <p><strong>Company Name:</strong> {provider.companyName}</p>
-                <p><strong>Policy Number:</strong> {provider.policyNumber}</p>
-                <p><strong>Insurance Type:</strong> {provider.insuranceType}</p>
-                <p><strong>Start Date:</strong> {provider.startDate}</p>
-                <p><strong>End Date:</strong> {provider.endDate}</p>
-              </div>
-              <button type="button" className="select-button" onClick={() => handleSelectProvider(provider)}>Select</button>
-            </li>
-          ))}
-        </ul>
-        <button type="submit" className="submit-button" disabled={!selectedProvider}>Submit</button>
-      </form>
-      {selectedProvider && (
-        <div className="selected-provider">
-          <h3>Successfully chosen the provider: {selectedProvider.name}</h3>
-          <p><strong>Company Name:</strong> {selectedProvider.companyName}</p>
-          <p><strong>Policy Number:</strong> {selectedProvider.policyNumber}</p>
-          <p><strong>Insurance Type:</strong> {selectedProvider.insuranceType}</p>
-          <p><strong>Start Date:</strong> {selectedProvider.startDate}</p>
-          <p><strong>End Date:</strong> {selectedProvider.endDate}</p>
+      
+      {/* Insurance Provider Search section */}
+      <section className="bg-green-200 py-8">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-4">Find Insurance Providers</h2>
+          <div className="flex flex-col md:flex-row md:space-x-4 justify-center">
+            {/* Company Name input */}
+            <div className="flex flex-col flex-1">
+              <label htmlFor="companyName" className="mb-2">Company Name</label>
+              <input
+                id="companyName"
+                type="text"
+                placeholder="Company Name"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                className="border border-gray-300 rounded-md px-4 py-2 mb-4"
+              />
+            </div>
+            {/* Price input */}
+            <div className="flex flex-col flex-1">
+              <label htmlFor="price" className="mb-2">Price</label>
+              <input
+                id="price"
+                type="number"
+                placeholder="Price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                className="border border-gray-300 rounded-md px-4 py-2 mb-4"
+              />
+            </div>
+            {/* Medical Included dropdown */}
+            <div className="flex flex-col flex-1">
+              <label htmlFor="medicalIncluded" className="mb-2">Medical Included</label>
+              <select
+                id="medicalIncluded"
+                value={medicalIncluded}
+                onChange={(e) => setMedicalIncluded(e.target.value)}
+                className="border border-gray-300 rounded-md px-4 py-2 mb-4"
+              >
+                <option value="">Medical Included</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+            {/* Dental Included dropdown */}
+            <div className="flex flex-col flex-1">
+              <label htmlFor="dentalIncluded" className="mb-2">Dental Included</label>
+              <select
+                id="dentalIncluded"
+                value={dentalIncluded}
+                onChange={(e) => setDentalIncluded(e.target.value)}
+                className="border border-gray-300 rounded-md px-4 py-2 mb-4"
+              >
+                <option value="">Dental Included</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+            {/* Vision Included dropdown */}
+            <div className="flex flex-col flex-1">
+              <label htmlFor="visionIncluded" className="mb-2">Vision Included</label>
+              <select
+                id="visionIncluded"
+                value={visionIncluded}
+                onChange={(e) => setVisionIncluded(e.target.value)}
+                className="border border-gray-300 rounded-md px-4 py-2 mb-4"
+              >
+                <option value="">Vision Included</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+          </div>
+          {/* Search button */}
+          <div className="flex justify-center">
+            <button
+              onClick={handleSearch}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            >
+              Search
+            </button>
+          </div>
         </div>
-      )}
-      <style jsx>{`
-        .insurance-container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 20px;
-        }
+      </section>
 
-        .provider-list {
-          list-style-type: none;
-          padding: 0;
-        }
-
-        .provider-item {
-          border: 1px solid #ccc;
-          margin-bottom: 20px;
-          padding: 20px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          transition: box-shadow 0.3s;
-        }
-
-        .provider-item:hover {
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .provider-details {
-          flex-grow: 1;
-        }
-
-        .select-button, .submit-button {
-          background-color: #007bff;
-          color: #fff;
-          border: none;
-          padding: 10px 20px;
-          cursor: pointer;
-          transition: background-color 0.3s;
-        }
-
-        .select-button:hover, .submit-button:hover {
-          background-color: #0056b3;
-        }
-
-        .submit-button {
-          margin-top: 20px;
-        }
-
-        .selected-provider {
-          margin-top: 20px;
-          border: 1px solid #28a745;
-          padding: 20px;
-          background-color: #d4edda;
-        }
-
-        .selected-provider h3 {
-          margin-top: 0;
-          font-size: 24px;
-          color: #28a745;
-        }
-
-        .selected-provider p {
-          margin: 10px 0;
-        }
-      `}</style>
-    </div>
+      <Footer />
+    </main>
   );
-};
+}
 
-export default Insurance;
+export default InsuranceProviderSearchPage;

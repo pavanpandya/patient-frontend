@@ -1,18 +1,18 @@
-import React from 'react';
 import Link from "next/link";
 import Logo from "./Logo";
 
-function Header2() {
+function Header() {
     return (
-        <nav className="flex justify-between bg-gray-800 h-18 align-center text-milk text-slate-100">
+        <nav className="flex justify-between bg-gray-800 h-16 w-screen align-center text-milk text-slate-100 px-8">
             <Logo />
-            <div className="flex items-center mr-1">
-                <Link className="font-black pr-14 text-3xl" href="/insurancedb">Dashboard</Link>
-                <Link className="font-black pr-14 text-3xl" href="/insurancepd">Patient Details</Link>
-                <Link className="font-black pr-14 text-3xl" href="/insuranceacc">Account</Link>
+            <div className="flex items-center">
+                <Link className="font-black pr-14 text-2xl" href="/dashboard">Dashboard</Link>
+                <Link className="font-black pr-14 text-2xl" href="/search">Plans</Link>
+                <Link className="font-black pr-14 text-2xl" href="/account">Profile</Link>
             </div>
         </nav>
     );
 }
 
-export default Header2;
+export default Header;
+

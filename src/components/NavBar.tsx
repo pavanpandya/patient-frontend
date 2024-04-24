@@ -3,16 +3,14 @@ import Logo from "./Logo";
 
 function Header() {
     return (
-        <nav className="flex justify-between bg-gray-800 h-16 w-screen align-center text-milk text-slate-100">
+        <nav className="flex justify-between bg-gray-800 h-16 w-screen align-center text-milk text-slate-100 px-8">
             <Logo />
-            <div className="flex items-center mr-1">
-                <Link className="font-black pr-14 text-3xl" href="/dashboard">Dashboard</Link>
-                <Link className="font-black pr-14 text-3xl" href="/search">Search</Link>
-                <Link className="font-black pr-14 text-3xl" href="/map">Map</Link>
-                <Link className="font-black pr-14 text-3xl" href="/questionnaire">Covid Questionaire</Link>
-                <Link className="font-black pr-14 text-3xl" href="/insurance"> Insurance </Link>
-                <Link className="font-black pr-14 text-3xl" href="/patientreview">Patient Review</Link>
-                <Link className="font-black pr-14 text-3xl" href="/account">Account</Link>
+            <div className="flex items-center">
+                <Link className="font-black pr-14 text-2xl" href="/dashboard">Dashboard</Link>
+                <Link className="font-black pr-14 text-2xl" href="/search">Find a Doctor</Link>
+                <Link className="font-black pr-14 text-2xl" href="/insurance">Insurance</Link>
+                <Link className="font-black pr-14 text-2xl" href="/account">My Appointments</Link>
+                <Link className="font-black pr-14 text-2xl" href="/account">Profile</Link>
             </div>
         </nav>
     );

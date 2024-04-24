@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Button, Divider, TextField } from '@material-ui/core';
-import Header2 from '../components/Navbari';
+import Header2 from '../components/NavBari';
 
 const Account: React.FC = () => {
   const [loaded, setLoaded] = useState(false);

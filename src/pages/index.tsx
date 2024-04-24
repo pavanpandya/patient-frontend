@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Logo from "../components/Logo";
 import Image from "next/image";
+import Footer from "../components/Footer";
 import main_img from "../images/main-hero-image.png";
 
 export default function Home() {
@@ -10,9 +11,9 @@ export default function Home() {
         <nav className="flex justify-between bg-gray-800 h-16 w-screen align-center text-milk text-slate-100 px-8">
           <Logo />
           <div className="flex items-center mr-1">
-            <Link className="font-black pr-14 text-3xl" href="/faq">FAQ</Link>
-            <Link className="font-black pr-14 text-3xl" href="/about">About Us</Link>
-            <Link className="font-black pr-14 text-3xl" href="/login">Login</Link>
+            <Link className="font-black pr-14 text-2xl" href="/faq">FAQ</Link>
+            <Link className="font-black pr-14 text-2xl" href="/about">About Us</Link>
+            <Link className="font-black pr-14 text-2xl" href="/login">Register</Link>
           </div>
         </nav>
         <div className="flex flex-col md:flex-row items-center justify-between mt-20 px-16">
@@ -29,12 +30,25 @@ export default function Home() {
               </p>
               <div className="text-left mt-8">
                 <Link
-                  className="text-left mx-auto text-xl bg-emerald-700 text-white border border-emerald-700 font-bold py-2 px-6 rounded-lg"
-                  href="/login"
+                  className="text-left mx-auto text-xl bg-emerald-700 text-white border border-emerald-700 font-bold py-2 px-6 rounded-lg mr-4"
+                  href="/patientlogin"
                 >
-                  Get Started
+                  I'm a Patient
+                </Link>
+                <Link
+                  className="text-left mx-auto text-xl bg-emerald-700 text-white border border-emerald-700 font-bold py-2 px-6 rounded-lg mr-4"
+                  href="/doctorlogin"
+                >
+                  I'm a Doctor
+                </Link>
+                <Link
+                  className="text-left mx-auto text-xl bg-emerald-700 text-white border border-emerald-700 font-bold py-2 px-6 rounded-lg"
+                  href="/insurancelogin"
+                >
+                  I sell Insurance Plans
                 </Link>
               </div>
+
             </div>
           </div>
           <div className="flex-1 p-8">
@@ -48,9 +62,8 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <footer className="bg-gray-800 text-white text-center py-4 fixed bottom-0 w-full">
-        <p>&copy; {new Date().getFullYear()} Medilink. All rights reserved.</p>
-      </footer>
+      
+      <Footer />
     </div>
   );
 }

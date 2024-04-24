@@ -1,5 +1,5 @@
 import React from 'react';
-import Header2 from "../components/Navbari";
+import Header2 from "../components/NavBari";
 
 const InsuranceProviderDashboard = () => {
   // Static provider details
