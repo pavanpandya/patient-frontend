@@ -8,7 +8,7 @@ function Header() {
             <div className="flex items-center">
                 <Link className="font-black pr-14 text-2xl" href="/dashboard">Schedule</Link>
                 <Link className="font-black pr-14 text-2xl" href="/search">Testimonials</Link>
-                <Link className="font-black pr-14 text-2xl" href="/insurance">Chat</Link>
+                <Link className="font-black pr-14 text-2xl" href="/chatdemo">Chat</Link>
                 <Link className="font-black pr-14 text-2xl" href="/account">Profile</Link>
                 <Link className="font-black pr-14 text-2xl" href="/">Logout</Link>
             </div>
