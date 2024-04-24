@@ -9,6 +9,7 @@ function Header() {
                 <Link className="font-black pr-14 text-2xl" href="/dashboard">Dashboard</Link>
                 <Link className="font-black pr-14 text-2xl" href="/search">Find a Doctor</Link>
                 <Link className="font-black pr-14 text-2xl" href="/insurance">Insurance</Link>
+                <Link className="font-black pr-14 text-2xl" href="/book">My Booking</Link>
                 <Link className="font-black pr-14 text-2xl" href="/patientappointments">My Appointments</Link>
                 <Link className="font-black pr-14 text-2xl" href="/account">Profile</Link>
                 <Link className="font-black pr-14 text-2xl" href="/">Logout</Link>
