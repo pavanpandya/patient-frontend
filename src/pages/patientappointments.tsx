@@ -14,13 +14,20 @@ const PatientAppointments: React.FC = () => {
   // State variable to track active tab (upcoming or past appointments)
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
 
-  // Function to filter and sort appointments based on current date
+  interface Appointment {
+    id: number;
+    date: string;
+    time: string;
+    doctor: string;
+    specialty: string;
+  }
+  
   const filterAppointments = () => {
     const today = new Date();
-    const filteredUpcoming = [];
-    const filteredPast = [];
-
-    allAppointments.forEach(appointment => {
+    const filteredUpcoming: Appointment[] = [];
+    const filteredPast: Appointment[] = [];
+  
+    allAppointments.forEach((appointment: Appointment) => {
       const appointmentDate = new Date(appointment.date);
       if (appointmentDate >= today) {
         filteredUpcoming.push(appointment);
@@ -28,7 +35,7 @@ const PatientAppointments: React.FC = () => {
         filteredPast.push(appointment);
       }
     });
-
+  
     setUpcomingAppointments(filteredUpcoming);
     setPastAppointments(filteredPast);
   };
