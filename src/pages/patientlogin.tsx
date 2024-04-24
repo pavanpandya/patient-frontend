@@ -4,27 +4,48 @@ import { useRouter } from 'next/router';
 import Footer from '../components/Footer';
 import Logo from '../components/Logo';
 
+const API_URL = 'https://pims-service.onrender.com/api/patient/login/';
+
 const PatientLogin: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [email, setemail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleLogin = () => {
-    console.log('Patient login with username:', username, 'and password:', password);
-    // Add your login logic here for patients
-    router.push('/duo');
+  const handleLogin = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/patient/login/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Patient login successful:', data);
+        // Add your logic to handle the successful login response
+        router.push('/duo');
+      } else {
+        console.error('Patient login failed:', response.status);
+        // Add your logic to handle the login failure
+      }
+    } catch (error) {
+      console.error('Error during patient login:', error);
+      // Add your logic to handle network or other errors
+    }
   };
 
   return (
     <main>
       <nav className="flex justify-between bg-gray-800 h-16 w-screen align-center text-milk text-slate-100 px-8">
-          <Logo />
-          <div className="flex items-center mr-1">
-            <Link className="font-black pr-14 text-2xl" href="/faq">FAQ</Link>
-            <Link className="font-black pr-14 text-2xl" href="/about">About Us</Link>
-            <Link className="font-black pr-14 text-2xl" href="/login">Register</Link>
-          </div>
-        </nav>
+        <Logo />
+        <div className="flex items-center mr-1">
+          <Link className="font-black pr-14 text-2xl" href="/faq">FAQ</Link>
+          <Link className="font-black pr-14 text-2xl" href="/about">About Us</Link>
+          <Link className="font-black pr-14 text-2xl" href="/login">Register</Link>
+        </div>
+      </nav>
       <div className="flex justify-center mt-20">
         <div className="flex flex-col items-center">
           <h1 className="font-bold text-4xl mt-2 text-blue-800">
@@ -35,9 +56,9 @@ const PatientLogin: React.FC = () => {
               <h2 className="text-2xl font-semibold mb-4 text-blue-800">Patient Login</h2>
               <input
                 type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
                 className="w-full mb-4 px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
               />
               <input

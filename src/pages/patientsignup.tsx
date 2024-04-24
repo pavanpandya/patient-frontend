@@ -1,47 +1,77 @@
 import { useState } from 'react';
 import Header from "../components/NavBar";
 
-const API_URL = 'https://pims-service.onrender.com/api/patient/signup';
+const API_URL = 'https://pims-service.onrender.com/api/patient/signup/';
 
 export default function PatientSignUp() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [first_name, setfirst_name] = useState("");
+  const [last_name, setlast_name] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [date_of_birth, setdate_of_birth] = useState("");
   const [gender, setGender] = useState("");
-  const [bloodGroup, setBloodGroup] = useState("");
+  const [blood_group_type, setblood_group_type] = useState("");
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirm_password, setconfirm_password] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [registrationMessage, setRegistrationMessage] = useState("");
 
-  const genders = ["Male", "Female", "Other"];
-  const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
-  const handleRegistration = () => {
+  const genders = ["Male", "Female", "Other"];
+  const blood_group_types = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+
+  const handleRegistration = async () => {
     // Validate password and confirm password
-    if (password !== confirmPassword) {
+    if (password !== confirm_password) {
       setPasswordError("Passwords do not match");
       return;
     }
 
-    // You can perform client-side validation here before registration
-    // Simulate registration by displaying a success message
-    setRegistrationMessage("Registration successful. Welcome to Medilink!");
-    // Reset form fields after successful registration
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setAddress("");
-    setDateOfBirth("");
-    setGender("");
-    setBloodGroup("");
-    setMobile("");
-    setPassword("");
-    setConfirmPassword("");
-    setPasswordError("");
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          first_name,
+          last_name,
+          email,
+          address,
+          date_of_birth,
+          gender,
+          blood_group_type,
+          mobile,
+          password,
+          confirm_password,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setRegistrationMessage("Registration successful. Welcome to Medilink!");
+        console.log('Registration successful:', data);
+        // Reset form fields after successful registration
+        setfirst_name("");
+        setlast_name("");
+        setEmail("");
+        setAddress("");
+        setdate_of_birth("");
+        setGender("");
+        setblood_group_type("");
+        setMobile("");
+        setPassword("");
+        setconfirm_password("");
+        setPasswordError("");
+      } else {
+        console.error('Registration failed:', response.status);
+        setRegistrationMessage('Registration failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during registration:', error);
+      setRegistrationMessage('An error occurred during registration. Please try again.');
+    }
   };
 
   return (
@@ -55,8 +85,8 @@ export default function PatientSignUp() {
             <input
               type="text"
               placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              value={first_name}
+              onChange={(e) => setfirst_name(e.target.value)}
               className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -64,8 +94,8 @@ export default function PatientSignUp() {
             <input
               type="text"
               placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              value={last_name}
+              onChange={(e) => setlast_name(e.target.value)}
               className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -91,8 +121,8 @@ export default function PatientSignUp() {
             <input
               type="date"
               placeholder="Date of Birth"
-              value={dateOfBirth}
-              onChange={(e) => setDateOfBirth(e.target.value)}
+              value={date_of_birth}
+              onChange={(e) => setdate_of_birth(e.target.value)}
               className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -110,12 +140,12 @@ export default function PatientSignUp() {
           </div>
           <div className="mb-4">
             <select
-              value={bloodGroup}
-              onChange={(e) => setBloodGroup(e.target.value)}
+              value={blood_group_type}
+              onChange={(e) => setblood_group_type(e.target.value)}
               className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
             >
               <option value="">Select Blood Group</option>
-              {bloodGroups.map((option) => (
+              {blood_group_types.map((option) => (
                 <option key={option} value={option}>{option}</option>
               ))}
             </select>
@@ -142,9 +172,9 @@ export default function PatientSignUp() {
             <input
               type="password"
               placeholder="Confirm Password"
-              value={confirmPassword}
+              value={confirm_password}
               onChange={(e) => {
-                setConfirmPassword(e.target.value);
+                setconfirm_password(e.target.value);
                 setPasswordError("");
               }}
               className={`w-full px-4 py-2 border ${passwordError ? 'border-red-500' : 'border-gray-400'} rounded-md focus:outline-none focus:border-blue-500`}

@@ -1,25 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Footer from '../components/Footer';
 import Header from '../components/NavBar';
 
+const API_URL = 'https://pims-service.onrender.com/api/patient/profile/';
+
 const PatientProfile: React.FC = () => {
-  // Sample patient data (replace with actual data)
   const [patientData, setPatientData] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    address: '123 Main Street, City, Country',
-    dateOfBirth: '1990-01-01',
-    gender: 'Male',
-    bloodGroup: 'A+',
-    mobile: '+1234567890',
+    firstName: '',
+    lastName: '',
+    email: '',
+    address: '',
+    dateOfBirth: '',
+    gender: '',
+    bloodGroup: '',
+    mobile: '',
   });
 
-  // State to track whether the profile is in edit mode
   const [editMode, setEditMode] = useState(false);
 
-  // Function to handle changes in profile data
+  useEffect(() => {
+    // Fetch patient data from the API
+    const fetchPatientData = async () => {
+      try {
+        const response = await fetch(API_URL, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            // Add any necessary headers for authentication or authorization
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setPatientData(data);
+        } else {
+          console.error('Failed to fetch patient data:', response.status);
+        }
+      } catch (error) {
+        console.error('Error fetching patient data:', error);
+      }
+    };
+
+    fetchPatientData();
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setPatientData(prevData => ({
@@ -28,20 +53,34 @@ const PatientProfile: React.FC = () => {
     }));
   };
 
-  // Function to handle saving changes
-  const handleSave = () => {
-    // Perform save action (e.g., make API call to update patient data)
-    console.log('Saving changes:', patientData);
-    // For demo purposes, we'll just toggle edit mode off
-    setEditMode(false);
+  const handleSave = async () => {
+    try {
+      const response = await fetch(API_URL, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any necessary headers for authentication or authorization
+        },
+        body: JSON.stringify(patientData),
+      });
+
+      if (response.ok) {
+        console.log('Patient data updated successfully');
+        setEditMode(false);
+      } else {
+        console.error('Failed to update patient data:', response.status);
+      }
+    } catch (error) {
+      console.error('Error updating patient data:', error);
+    }
   };
 
   return (
     <main>
       <Header />
-      
+
       {/* Patient Profile section */}
-      <section className="py-8" style={{background: "#d5c6e0"}}>
+      <section className="py-8" style={{ background: "#d5c6e0" }}>
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-4xl font-bold mb-4">Patient Profile</h2>
         </div>
