@@ -4,17 +4,70 @@ import Footer from '../components/Footer';
 import Header from '../components/NavBar';
 
 const InsuranceProviderSearchPage: React.FC = () => {
-  // State variables to store search inputs
+  // State variables to store search inputs and search results
   const [companyName, setCompanyName] = useState('');
   const [price, setPrice] = useState('');
   const [medicalIncluded, setMedicalIncluded] = useState('');
   const [dentalIncluded, setDentalIncluded] = useState('');
   const [visionIncluded, setVisionIncluded] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]); // Array to store search results
 
   // Function to handle search
   const handleSearch = () => {
-    // Perform search based on inputs
-    // You can implement the search logic here
+    // Simulating API call to fetch search results
+    // Replace this with your actual API request
+    const searchParams = {
+      companyName,
+      price,
+      medicalIncluded,
+      dentalIncluded,
+      visionIncluded,
+    };
+    // Simulated search results
+    const results = [
+      {
+        companyName: 'Company A',
+        planName: 'Plan 1',
+        planDescription: 'This is Plan 1 description.',
+        dentalIncluded: true,
+        visionIncluded: false,
+        medicalIncluded: true,
+        price: '$100',
+      },
+      {
+        companyName: 'Company B',
+        planName: 'Plan 2',
+        planDescription: 'This is Plan 2 description.',
+        dentalIncluded: false,
+        visionIncluded: true,
+        medicalIncluded: false,
+        price: '$150',
+      },
+      // Add more simulated search results here if needed
+    ];
+
+    // Filter results based on search criteria
+    const filteredResults = results.filter(result => {
+      let include = true;
+      if (companyName && result.companyName.toLowerCase() !== companyName.toLowerCase()) {
+        include = false;
+      }
+      if (price && result.price !== price) {
+        include = false;
+      }
+      if (medicalIncluded && result.medicalIncluded !== medicalIncluded) {
+        include = false;
+      }
+      if (dentalIncluded && result.dentalIncluded !== dentalIncluded) {
+        include = false;
+      }
+      if (visionIncluded && result.visionIncluded !== visionIncluded) {
+        include = false;
+      }
+      return include;
+    });
+
+    setSearchResults(filteredResults);
   };
 
   return (
@@ -101,6 +154,26 @@ const InsuranceProviderSearchPage: React.FC = () => {
             >
               Search
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Display search results */}
+      <section className="py-8">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-4">Search Results</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {searchResults.map((result, index) => (
+              <div key={index} className="bg-white p-6 rounded-md shadow-md">
+                <h3 className="text-xl font-semibold mb-2">{result.companyName}</h3>
+                <p className="text-gray-600 mb-2">{result.planName}</p>
+                <p className="text-gray-600 mb-2">{result.planDescription}</p>
+                <p className="text-gray-600 mb-2">Price: {result.price}</p>
+                <p className="text-gray-600 mb-2">Include Dental: {result.dentalIncluded ? 'Yes' : 'No'}</p>
+                <p className="text-gray-600 mb-2">Include Vision: {result.visionIncluded ? 'Yes' : 'No'}</p>
+                <p className="text-gray-600 mb-2">Include Medical: {result.medicalIncluded ? 'Yes' : 'No'}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
