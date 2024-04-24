@@ -49,13 +49,16 @@ const InsurancePlans: React.FC = () => {
   });
 
   // Function to handle changes in new plan form data
-  const handleNewPlanChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+  const handleNewPlanChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const inputValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
     setNewPlanData(prevData => ({
       ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: inputValue,
     }));
   };
+  
+  
 
   // Function to handle creating a new plan
   const handleCreatePlan = () => {
