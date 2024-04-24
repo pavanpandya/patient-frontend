@@ -10,6 +10,7 @@ function Header() {
                 <Link className="font-black pr-14 text-2xl" href="/search">Testimonials</Link>
                 <Link className="font-black pr-14 text-2xl" href="/insurance">Chat</Link>
                 <Link className="font-black pr-14 text-2xl" href="/account">Profile</Link>
+                <Link className="font-black pr-14 text-2xl" href="/">Logout</Link>
             </div>
         </nav>
     );
