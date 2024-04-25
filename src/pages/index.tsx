@@ -4,6 +4,7 @@ import Image from "next/image";
 import Footer from "../components/Footer";
 import main_img from "../images/main-hero-image.png";
 
+
 export default function Home() {
   return ( 
     <div className="flex flex-col min-h-screen">
