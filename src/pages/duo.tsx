@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Grid, TextField, Button } from '@material-ui/core';
-
+ 
 const API_URL = 'https://pims-service.onrender.com/api/patient/duo';
 const Duo = () => {
   const [duoCode, setDuoCode] = useState('');
