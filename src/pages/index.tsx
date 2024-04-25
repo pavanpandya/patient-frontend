@@ -25,10 +25,9 @@ export default function Home() {
               <h3 className="text-3xl mb-4">
                 Your trusted partner for healthcare management.
               </h3>
-              <p className="text-xl">
-                Streamline your healthcare journey with Medilink's cutting-edge patient insurance management system. Seamlessly manage coverage, claims, and healthcare expenses with precision and ease.
-              </p>
-              <div className="text-left mt-8">
+              <div>
+                <p> Streamline your healthcare journey with Medilink's cutting-edge patient insurance management system.</p>
+                <p> Seamlessly manage coverage, claims, and healthcare expenses with precision and ease.</p>
                 <Link
                   className="text-left mx-auto text-xl bg-emerald-700 text-white border border-emerald-700 font-bold py-2 px-6 rounded-lg mr-4"
                   href="/patientlogin"
