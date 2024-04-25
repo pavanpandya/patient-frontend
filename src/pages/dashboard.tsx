@@ -13,7 +13,10 @@ const Dashboard: React.FC = () => {
           <div className="mb-8 bg-red-100 rounded-lg p-6">
             <h2 className="text-2xl font-bold mb-4">Common Guidelines and Precautions</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec consectetur ipsum, eu lobortis libero. Donec auctor ligula ac ligula eleifend commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis id sapien mauris.
+              Wash hands frequently.
+              Cover mouth and nose when coughing or sneezing.
+              Maintain distance from sick individuals.
+              Wear masks in crowded places.
             </p>
           </div>
 
@@ -23,7 +26,7 @@ const Dashboard: React.FC = () => {
             <div className="md:w-1/2 md:pr-4 mb-8 md:mb-0 bg-blue-100 rounded-lg p-6">
               <h2 className="text-2xl font-bold mb-4">Find a Doctor</h2>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec consectetur ipsum, eu lobortis libero. Donec auctor ligula ac ligula eleifend commodo.
+                Doctors are the one who gives the brightness of patient's life
               </p>
               <Link href="/search"
                 className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
@@ -37,7 +40,7 @@ const Dashboard: React.FC = () => {
             <div className="md:w-1/2 md:pl-4 bg-green-100 rounded-lg p-6">
               <h2 className="text-2xl font-bold mb-4">Find an Insurance Provider</h2>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec consectetur ipsum, eu lobortis libero. Donec auctor ligula ac ligula eleifend commodo.
+                Insurance providers do help financially for the patient family.
               </p>
               <Link href="/insurance"
                 className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
