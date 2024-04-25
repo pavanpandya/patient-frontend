@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import main_img from "../images/main-hero-image.png";
 
 export default function Home() {
-  return (
+  return ( 
     <div className="flex flex-col min-h-screen">
       <main>
         <nav className="flex justify-between bg-gray-800 h-16 w-screen align-center text-milk text-slate-100 px-8">
