@@ -12,12 +12,12 @@ const Dashboard: React.FC = () => {
           {/* First div for common guidelines */}
           <div className="mb-8 bg-red-100 rounded-lg p-6">
             <h2 className="text-2xl font-bold mb-4">Common Guidelines and Precautions</h2>
-            <p>
+            <div>
                <p>Wash hands frequently.</p>
                <p>Cover mouth and nose when coughing or sneezing.</p>
                <p> Maintain distance from sick individuals.</p>
                <p> Wear masks in crowded places.</p>
-            </p>
+            </div>
           </div>
 
           {/* Second div for finding insurance provider and doctor */}
