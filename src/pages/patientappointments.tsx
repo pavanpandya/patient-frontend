@@ -54,7 +54,7 @@ const PatientAppointments: React.FC = () => {
     const fetchData = async () => {
       // Replace this with actual API call
       const data = [
-        { id: 1, date: '2024-04-25', time: '10:00 AM', doctor: 'Dr. Anjali Patel', specialty: 'Cardiology', reason: 'Follow-up', symptoms: 'None' },
+        { id: 1, date: '2024-04-26', time: '10:00 AM', doctor: 'Dr. Anjali Patel', specialty: 'Cardiology', reason: 'Follow-up', symptoms: 'None' },
         { id: 2, date: '2024-05-05', time: '11:30 AM', doctor: 'Dr. Johnson', specialty: 'Dermatology', reason: 'Follow-up', symptoms: 'None' },
         { id: 3, date: '2024-04-15', time: '09:00 AM', doctor: 'Dr. Lee', specialty: 'Pediatrics', reason: 'Regular checkup', symptoms: 'None' },
         { id: 4, date: '2024-04-22', time: '02:00 PM', doctor: 'Dr. Wilson', specialty: 'Orthopedics', reason: 'Back pain', symptoms: 'Pain in lower back', rating: 5, feedback: 'Your treatment was good.' },
