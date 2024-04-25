@@ -26,8 +26,9 @@ export default function Home() {
                 Your trusted partner for healthcare management.
               </h3>
               <div>
-                <p> Streamline your healthcare journey with Medilink's cutting-edge patient insurance management system.</p>
-                <p> Seamlessly manage coverage, claims, and healthcare expenses with precision and ease.</p>
+                <p> Streamline your healthcare journey with Medilink's cutting-edge patient insurance management system. </p>
+                <p> Seamlessly manage coverage, claims, and healthcare expenses with precision and ease. </p>
+              </div>
                 <Link
                   className="text-left mx-auto text-xl bg-emerald-700 text-white border border-emerald-700 font-bold py-2 px-6 rounded-lg mr-4"
                   href="/patientlogin"
