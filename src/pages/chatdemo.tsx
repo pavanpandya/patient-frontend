@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Paper, TextField, MenuItem, Button } from '@material-ui/core';
+import { Typography, Paper, TextField, MenuItem, Button, makeStyles } from '@material-ui/core';
 import axios from 'axios';
-import Header1 from '@/components/NavBard';
+import Header from '../components/NavBard';
 
 interface Message {
   id: number;
@@ -16,7 +16,22 @@ interface Doctor {
   specialization: string;
 }
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(4),
+    '& .MuiTextField-root': {
+      marginBottom: theme.spacing(2),
+    },
+  },
+  messagePaper: {
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(2),
+  },
+}));
+
 const DoctorDashboard: React.FC = () => {
+  const classes = useStyles();
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -62,22 +77,18 @@ const DoctorDashboard: React.FC = () => {
 
   return (
     <main>
-      <Header1 />
-      <div>
+      <Header />
+      <div className={classes.root}>
         <Typography variant="h4">Welcome, Dr. {doctor.name}</Typography>
 
-
-        <Typography variant="h5">Patient Messages</Typography>
-        <Paper style={{ padding: '1rem', marginTop: '1rem' }}>
-          {messages.map(message => (
-            <div key={message.id}>
-              <Typography variant="subtitle1">From: {message.senderName}</Typography>
-              <Typography variant="subtitle1">To: {message.recipientName}</Typography>
-              <Typography variant="body1">{message.message}</Typography>
-              <hr style={{ margin: '0.5rem 0' }} />
-            </div>
-          ))}
-        </Paper>
+        <Typography variant="h5" style={{ marginTop: '2rem' }}>Patient Messages</Typography>
+        {messages.map(message => (
+          <Paper key={message.id} className={classes.messagePaper}>
+            <Typography variant="subtitle1">From: {message.senderName}</Typography>
+            <Typography variant="subtitle1">To: {message.recipientName}</Typography>
+            <Typography variant="body1">{message.message}</Typography>
+          </Paper>
+        ))}
 
         <Typography variant="h5" style={{ marginTop: '2rem' }}>Send Message to Patient</Typography>
         <TextField
@@ -87,7 +98,6 @@ const DoctorDashboard: React.FC = () => {
           fullWidth
           value={recipient}
           onChange={(e) => setRecipient(e.target.value as string)}
-          style={{ marginBottom: '1rem' }}
         >
           {messages.map(message => (
             <MenuItem key={message.senderName} value={message.senderName}>{message.senderName}</MenuItem>
@@ -99,7 +109,6 @@ const DoctorDashboard: React.FC = () => {
           fullWidth
           value={responseMessage}
           onChange={(e) => setResponseMessage(e.target.value)}
-          style={{ marginBottom: '1rem' }}
         />
         <Button variant="contained" color="primary" onClick={() => handleSendMessage(responseMessage)}>Send</Button>
       </div>

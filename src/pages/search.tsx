@@ -31,8 +31,8 @@ const DoctorSearchPage: React.FC = () => {
       firstName: 'John',
       lastName: 'Doe',
       ratings: 4.5,
-      hospital: 'Hospital A',
-      hospitalAddress: 'Address of Hospital A',
+      hospital: 'IU Health',
+      hospitalAddress: 'Bloomington, IN, USA',
       speciality: 'Cardiology',
       covidCareSupport: true,
       schedule: {
@@ -45,8 +45,8 @@ const DoctorSearchPage: React.FC = () => {
       firstName: 'Jane',
       lastName: 'Smith',
       ratings: 4.2,
-      hospital: 'Hospital B',
-      hospitalAddress: 'Address of Hospital B',
+      hospital: 'Luddy Hospital',
+      hospitalAddress: 'Chicago, IL, USA',
       speciality: 'Dermatology',
       covidCareSupport: false,
       schedule: {
@@ -59,8 +59,8 @@ const DoctorSearchPage: React.FC = () => {
       firstName: 'Anjali',
       lastName: 'Patel',
       ratings: 5.0,
-      hospital: 'Hospital C',
-      hospitalAddress: 'Address of Hospital C',
+      hospital: 'Patel Hospital',
+      hospitalAddress: 'California, USA',
       speciality: 'Surgeon',
       covidCareSupport: true,
       schedule: {

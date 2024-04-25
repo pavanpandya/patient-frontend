@@ -29,18 +29,18 @@ const InsuranceProviderSearchPage: React.FC = () => {
     // Simulated search results
     const results = [
       {
-        companyName: 'Company A',
-        planName: 'Plan 1',
-        planDescription: 'This is Plan 1 description.',
+        companyName: 'Blue Cross Blue Shield',
+        planName: 'Standard Plan',
+        planDescription: 'This is basic plan.',
         dentalIncluded: true,
         visionIncluded: false,
         medicalIncluded: true,
         price: '$100',
       },
       {
-        companyName: 'Company B',
-        planName: 'Plan 2',
-        planDescription: 'This is Plan 2 description.',
+        companyName: 'United Healthcare',
+        planName: 'Standard Plan',
+        planDescription: 'This is basic plan.',
         dentalIncluded: false,
         visionIncluded: true,
         medicalIncluded: false,
