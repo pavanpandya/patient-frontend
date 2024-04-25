@@ -12,6 +12,9 @@ const InsuranceProviderSearchPage: React.FC = () => {
   const [visionIncluded, setVisionIncluded] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]); // Array to store search results
 
+  // State variable to store selected insurance plans
+  const [selectedPlans, setSelectedPlans] = useState<any[]>([]);
+
   // Function to handle search
   const handleSearch = () => {
     // Simulating API call to fetch search results
@@ -46,28 +49,13 @@ const InsuranceProviderSearchPage: React.FC = () => {
       // Add more simulated search results here if needed
     ];
 
-    // Filter results based on search criteria
-    const filteredResults = results.filter(result => {
-      let include = true;
-      if (companyName && result.companyName.toLowerCase() !== companyName.toLowerCase()) {
-        include = false;
-      }
-      if (price && result.price !== price) {
-        include = false;
-      }
-      if (medicalIncluded && result.medicalIncluded.toString() !== medicalIncluded) {
-        include = false;
-      }
-      if (dentalIncluded && result.dentalIncluded.toString() !== dentalIncluded) {
-        include = false;
-      }
-      if (visionIncluded && result.visionIncluded.toString() !== visionIncluded) {
-        include = false;
-      }
-      return include;
-    });
+    setSearchResults(results);
+  };
 
-    setSearchResults(filteredResults);
+  // Function to handle buying a plan
+  const handleBuyPlan = (plan: any) => {
+    // Add the selected plan to the patient's profile
+    setSelectedPlans([...selectedPlans, plan]);
   };
 
   return (
@@ -159,19 +147,41 @@ const InsuranceProviderSearchPage: React.FC = () => {
       </section>
 
       {/* Display search results */}
+      {/* Display search results and "Buy Plan" button for each plan */}
       <section className="py-8">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-4xl mx-auto px-4 max-h-[50vh] overflow-y-auto">
           <h2 className="text-3xl font-bold mb-4">Search Results</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {searchResults.map((result, index) => (
               <div key={index} className="bg-white p-6 rounded-md shadow-md">
                 <h3 className="text-xl font-semibold mb-2">{result.companyName}</h3>
-                <p className="text-gray-600 mb-2">{result.planName}</p>
-                <p className="text-gray-600 mb-2">{result.planDescription}</p>
-                <p className="text-gray-600 mb-2">Price: {result.price}</p>
-                <p className="text-gray-600 mb-2">Include Dental: {result.dentalIncluded ? 'Yes' : 'No'}</p>
-                <p className="text-gray-600 mb-2">Include Vision: {result.visionIncluded ? 'Yes' : 'No'}</p>
-                <p className="text-gray-600 mb-2">Include Medical: {result.medicalIncluded ? 'Yes' : 'No'}</p>
+                <p className="mb-4">{result.planDescription}</p>
+                <p className="mb-2">Price: {result.price}</p>
+                <p className="mb-2">Medical Included: {result.medicalIncluded ? 'Yes' : 'No'}</p>
+                <p className="mb-2">Dental Included: {result.dentalIncluded ? 'Yes' : 'No'}</p>
+                <p className="mb-2">Vision Included: {result.visionIncluded ? 'Yes' : 'No'}</p>
+                {/* Buy Plan button */}
+                <button
+                  onClick={() => handleBuyPlan(result)} // Handle "Buy Plan" button click
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4"
+                >
+                  Buy Plan
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Display selected plans in the patient profile */}
+      <section className="py-8">
+        <div className="max-w-4xl mx-auto px-4 max-h-[50vh] overflow-y-auto">
+          <h2 className="text-3xl font-bold mb-4">Selected Plans</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {selectedPlans.map((plan, index) => (
+              <div key={index} className="bg-white p-6 rounded-md shadow-md">
+                <h3 className="text-xl font-semibold mb-2">{plan.companyName}</h3>
+                {/* Display plan details... */}
               </div>
             ))}
           </div>

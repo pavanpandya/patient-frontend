@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Footer from '../components/Footer';
+import Logo from '../components/Logo';
 
 const DoctorLogin: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -15,6 +17,14 @@ const DoctorLogin: React.FC = () => {
 
   return (
     <main>
+      <nav className="flex justify-between bg-gray-800 h-16 w-screen align-center text-milk text-slate-100 px-8">
+          <Logo />
+          <div className="flex items-center mr-1">
+            <Link className="font-black pr-14 text-2xl" href="/faq">FAQ</Link>
+            <Link className="font-black pr-14 text-2xl" href="/about">About Us</Link>
+            <Link className="font-black pr-14 text-2xl" href="/login">Register</Link>
+          </div>
+        </nav>
       <div className="flex justify-center mt-20">
         <div className="flex flex-col items-center">
           <h1 className="font-bold text-4xl mt-2 text-blue-800">
@@ -57,6 +67,7 @@ const DoctorLogin: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

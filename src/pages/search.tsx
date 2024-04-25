@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Footer from '../components/Footer';
 import Header from '../components/NavBar';
 
@@ -11,7 +13,19 @@ const DoctorSearchPage: React.FC = () => {
   const [covidCareSupport, setCovidCareSupport] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]); // Array to store search results
 
-  // Sample data for doctors (replace with actual data from API)
+  const [showModal, setShowModal] = useState(false); // State variable to track modal visibility
+  const [selectedDoctor, setSelectedDoctor] = useState<any>(null); // State variable to store selected doctor data
+  const [appointmentDate, setAppointmentDate] = useState(''); // State variable to store selected appointment date
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
+  const [availableTimeSlots, setAvailableTimeSlots] = useState<string[]>([]);
+
+
+  const handleBookAppointment = (doctor: any) => {
+    setSelectedDoctor(doctor);
+    setShowModal(true);
+  };
+
+ // Sample data for doctors (replace with actual data from API)
   const doctorsData = [
     {
       firstName: 'John',
@@ -21,6 +35,11 @@ const DoctorSearchPage: React.FC = () => {
       hospitalAddress: 'Address of Hospital A',
       speciality: 'Cardiology',
       covidCareSupport: true,
+      schedule: {
+        '2024-05-01': ['10:00 AM', '11:00 AM', '2:00 PM'], // Example schedule for May 1, 2024
+        '2024-05-02': ['9:00 AM', '10:00 AM', '3:00 PM'], // Example schedule for May 2, 2024
+        // Add more dates and time slots here
+      },
     },
     {
       firstName: 'Jane',
@@ -30,10 +49,28 @@ const DoctorSearchPage: React.FC = () => {
       hospitalAddress: 'Address of Hospital B',
       speciality: 'Dermatology',
       covidCareSupport: false,
+      schedule: {
+        '2024-05-01': ['1:00 PM', '2:00 PM', '3:00 PM'],
+        '2024-05-02': ['10:00 AM', '11:00 AM', '12:00 PM'],
+        // Add more dates and time slots here
+      },
+    },
+    {
+      firstName: 'Anjali',
+      lastName: 'Patel',
+      ratings: 5.0,
+      hospital: 'Hospital C',
+      hospitalAddress: 'Address of Hospital C',
+      speciality: 'Surgeon',
+      covidCareSupport: true,
+      schedule: {
+        '2024-05-01': ['1:00 PM', '2:00 PM', '3:00 PM'],
+        '2024-05-02': ['10:00 AM', '11:00 AM', '12:00 PM'],
+        // Add more dates and time slots here
+      },
     },
     // Add more doctor data here if needed
   ];
-
   // Function to handle search
   const handleSearch = () => {
     // Filter doctors based on search criteria
@@ -49,16 +86,77 @@ const DoctorSearchPage: React.FC = () => {
     setSearchResults(filteredDoctors);
   };
 
+  // Function to fetch available time slots based on selected date
+  const fetchAvailableTimeSlots = async () => {
+    // Replace this with your logic to fetch available time slots from the server
+    // Example: const timeSlots = await fetchTimeSlots(selectedDoctor.id, appointmentDate);
+    const timeSlots = ['10:00 AM', '11:00 AM', '12:00 PM', '2:00 PM', '3:00 PM']; // Sample time slots
+    setAvailableTimeSlots(timeSlots);
+  };
+
+  // Function to handle selecting a date
+  const handleDateSelection = (date: string) => {
+    setAppointmentDate(date);
+    fetchAvailableTimeSlots(); // Fetch available time slots for the selected date
+  };
+
+  // Function to get available time slots for the selected date and doctor
+  const getAvailableTimeSlots = (doctor: any, date: string) => {
+    return doctor.schedule[date] || [];
+  };
+
+  // Function to handle selecting a time slot
+  const handleTimeSlotSelection = (timeSlot: string) => {
+    setSelectedTimeSlot(timeSlot);
+  };
+
   // Function to handle booking appointment
-  const handleBookAppointment = (doctor: any) => {
-    // Logic to open modal for filling questionnaire and booking appointment slot
-    console.log('Booking appointment with:', doctor);
+const handleConfirmAppointment = () => {
+  // Logic to confirm appointment
+  console.log('Booking appointment with:', selectedDoctor, 'on', appointmentDate, 'at', selectedTimeSlot);
+  // Show confirmation toast
+  showConfirmationToast('Appointment booked successfully!');
+  // Remove booked time slot from available time slots
+  const updatedAvailableTimeSlots = availableTimeSlots.filter(timeSlot => timeSlot !== selectedTimeSlot);
+  setAvailableTimeSlots(updatedAvailableTimeSlots);
+  // Close the modal
+  setShowModal(false);
+  // Reset selected doctor, appointment date, and time slot
+  setSelectedDoctor(null);
+  setAppointmentDate('');
+  setSelectedTimeSlot('');
+};
+
+
+  // Function to handle canceling appointment
+  const handleCancelAppointment = () => {
+    // Show cancelation toast
+    showCancelationToast('Appointment canceled!');
+    // Close the modal
+    setShowModal(false);
+    // Reset selected doctor and appointment date
+    setSelectedDoctor(null);
+    setAppointmentDate('');
+  };
+
+  // Function to show confirmation toast
+  const showConfirmationToast = (message: string) => {
+    toast.success(message, {
+      position: "top-right",
+    });
+  };
+
+  // Function to show cancelation toast
+  const showCancelationToast = (message: string) => {
+    toast.error(message, {
+      position: "top-right",
+    });
   };
 
   return (
     <main>
       <Header />
-      
+      <ToastContainer />
       {/* Doctor Search section */}
       <section className="py-8"  style={{background: "#d5c6e0"}}>
         <div className="max-w-4xl mx-auto px-4">
@@ -129,7 +227,7 @@ const DoctorSearchPage: React.FC = () => {
 
       {/* Display search results */}
       <section className="py-8">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-4xl mx-auto px-4 max-h-[50vh] overflow-y-auto">
           <h2 className="text-3xl font-bold mb-4">Search Results</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {searchResults.map((doctor, index) => (
@@ -152,7 +250,69 @@ const DoctorSearchPage: React.FC = () => {
         </div>
       </section>
 
-      <Footer />
+      {/* Appointment Booking Modal */}
+      {showModal && (
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">{selectedDoctor.firstName} {selectedDoctor.lastName}</h3>
+                    <p className="text-sm text-gray-500">Hospital: {selectedDoctor.hospital}</p>
+                    <p className="text-sm text-gray-500">Speciality: {selectedDoctor.speciality}</p>
+                    <p className="text-sm text-gray-500">Ratings: {selectedDoctor.ratings}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 px-4 py-5 sm:px-6">
+                <h3 className="text-lg leading-6 font-medium text-gray-900">Select Appointment Date</h3>
+                <input
+                  type="date"
+                  value={appointmentDate}
+                  onChange={(e) => handleDateSelection(e.target.value)}
+                  className="mt-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500 block w-full shadow-sm sm:text-sm"
+                />
+                <div className="mt-4">
+                  <h3 className="text-lg leading-6 font-medium text-gray-900">Select Appointment Time Slot</h3>
+                  {availableTimeSlots.map((timeSlot: string, index: number) => (
+                    <div key={index} className="mt-2">
+                      <input
+                        type="radio"
+                        id={`timeSlot${index}`}
+                        name="timeSlot"
+                        value={timeSlot}
+                        onChange={(e) => setSelectedTimeSlot(e.target.value)}
+                        className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                      />
+                      <label htmlFor={`timeSlot${index}`} className="ml-2 block text-sm font-medium text-gray-700">{timeSlot}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button
+                  onClick={handleConfirmAppointment}
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Confirm Appointment
+                </button>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <Footer />  
     </main>
   );
 }

@@ -1,160 +1,79 @@
-import React, { useState, useEffect } from 'react';
-import { Typography, List, ListItem, ListItemText, Button, Paper, TextField, MenuItem } from '@material-ui/core';
-import axios from 'axios';
-import Header1 from '@/components/NavBard';
-interface Appointment {
+import React from 'react';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import moment from 'moment';
+import Footer from '../components/Footer';
+import Header from '../components/NavBard';
+
+// Define type for event
+interface Event {
   id: number;
-  patientName: string;
-  appointmentTime: string;
-  reason: string;
-  status: 'pending' | 'approved' | 'rejected';
+  title: string;
+  start: Date;
+  end: Date;
 }
 
-interface Message {
-  id: number;
-  senderName: string;
-  recipientName: string;
-  message: string;
-}
-
-interface Doctor {
-  id: number;
-  name: string;
-  specialization: string;
-}
+// Set up localizer to use moment.js for formatting
+const localizer = momentLocalizer(moment);
 
 const DoctorDashboard: React.FC = () => {
-  const [appointments, setAppointments] = useState<Appointment[]>([
+  // Sample appointments data (replace with actual data)
+  const appointments: Event[] = [
     {
       id: 1,
-      patientName: 'Sridhar Reddy',
-      appointmentTime: '2024-04-23 10:00 ',
-      reason: 'Checkup',
-      status: 'pending'
+      title: 'Appointment with John Doe',
+      start: new Date(2024, 3, 23, 10, 0), // Year, Month (0-indexed), Day, Hour, Minute
+      end: new Date(2024, 3, 23, 11, 0),
     },
     {
       id: 2,
-      patientName: 'Virat Kohli',
-      appointmentTime: '2024-04-23 14:00 ',
-      reason: 'Follow-up',
-      status: 'pending'
-    }
-  ]);
-
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      senderName: 'Patient Sridhar',
-      recipientName: 'Sridhar Reddy',
-      message: 'Doctor, please give medications.'
+      title: 'Appointment with Jane Smith',
+      start: new Date(2024, 3, 24, 14, 0),
+      end: new Date(2024, 3, 24, 15, 0),
     },
-   
-  ]);
+    {
+      id: 3,
+      title: 'Appointment with Nisarg Shah',
+      start: new Date(2024, 3, 24, 18, 30),
+      end: new Date(2024, 3, 24, 19, 30),
+    },
+    // Add more appointments here
+  ];
 
-  const [doctor] = useState<Doctor>({
-    id: 1,
-    name: 'Dr. Baali',
-    specialization: 'Cardiologist'
-  });
-  
-
-  const [responseMessage, setResponseMessage] = useState('');
-  const [recipient, setRecipient] = useState<string>(''); // To store the selected recipient
-
-  const handleApproveAppointment = (appointmentId: number) => {
-    setAppointments(prevAppointments =>
-      prevAppointments.map(appointment =>
-        appointment.id === appointmentId ? { ...appointment, status: 'approved' } : appointment
-      )
-    );
+  // Event prop getter function
+  const eventPropGetter = (event: Event) => {
+    const backgroundColor = '#00CC66'; // Green color for appointments
+    return { style: { backgroundColor } };
   };
-
-  const handleSendMessage = async (message: string) => {
-    if (message.trim() !== '') {
-      const newMessage: Message = {
-        id: messages.length + 1,
-        senderName: doctor.name,
-        recipientName: recipient,
-        message: message.trim()
-      };
-      setMessages(prevMessages => [...prevMessages, newMessage]);
-      setResponseMessage('');
-    }
-  };
-
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const response = await axios.get('/api/messages');
-        setMessages(response.data);
-      } catch (error) {
-        console.error('Error fetching messages:', error);
-      }
-    };
-
-    fetchMessages();
-  }, []);
 
   return (
     <main>
-       <Header1 />
-      <div>
-
-        <Typography variant="h4">Welcome, Dr. {doctor.name}</Typography>
-
-        <Typography variant="h5">Upcoming Appointments</Typography>
-        <List>
-          {appointments.map(appointment => (
-            <ListItem key={appointment.id}>
-              <ListItemText primary={`Patient: ${appointment.patientName}`} secondary={`Time: ${appointment.appointmentTime}`} />
-              {appointment.status === 'pending' && (
-                <Button variant="contained" color="primary" onClick={() => handleApproveAppointment(appointment.id)}>Approve</Button>
-              )}
-              {appointment.status === 'approved' && (
-                <Typography variant="body2" color="primary">Approved</Typography>
-              )}
-            </ListItem>
-          ))}
-        </List>
-
-        <Typography variant="h5">Patient Messages</Typography>
-        <Paper style={{ padding: '1rem', marginTop: '1rem' }}>
-          {messages.map(message => (
-            <div key={message.id}>
-              <Typography variant="subtitle1">From: {message.senderName}</Typography>
-              <Typography variant="subtitle1">To: {message.recipientName}</Typography>
-              <Typography variant="body1">{message.message}</Typography>
-              <hr style={{ margin: '0.5rem 0' }} />
-            </div>
-          ))}
-        </Paper>
-
-        <Typography variant="h5" style={{ marginTop: '2rem' }}>Send Message to Patient</Typography>
-        <TextField
-          label="Recipient"
-          variant="outlined"
-          select
-          fullWidth
-          value={recipient}
-          onChange={(e) => setRecipient(e.target.value as string)}
-          style={{ marginBottom: '1rem' }}
-        >
-          {appointments.map(appointment => (
-            <MenuItem key={appointment.id} value={appointment.patientName}>{appointment.patientName}</MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          label="Your Message"
-          variant="outlined"
-          fullWidth
-          value={responseMessage}
-          onChange={(e) => setResponseMessage(e.target.value)}
-          style={{ marginBottom: '1rem' }}
-        />
-        <Button variant="contained" color="primary" onClick={() => handleSendMessage(responseMessage)}>Send</Button>
+      <Header />
+      
+      {/* Doctor Dashboard section */}
+      <section className="py-6" style={{ background: "#d5c6e0" }}>
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-4">Hello Doctor, </h2>
+        </div>
+      </section>
+      
+      <div className="max-w-4xl mx-auto px-4 mt-5">
+        <div className="bg-white rounded-lg shadow-md p-8">
+          {/* Calendar component */}
+          <Calendar
+            localizer={localizer}
+            events={appointments}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: 500 }} // Set calendar height as needed
+            eventPropGetter={eventPropGetter}
+          />
+        </div>
       </div>
+
+      <Footer />
     </main>
   );
-};
+}
 
 export default DoctorDashboard;
